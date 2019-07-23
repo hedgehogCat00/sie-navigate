@@ -1,4 +1,4 @@
-# sie-navigate
+# sie-nav
 navigation web app
 
 ## Project setup
