@@ -1,0 +1,6 @@
+{
+    "extends": ["tslint:recommentded", "tslint-config-standard"],
+    "rules": {
+        "max-line-length": [true, 80]
+    }
+}
