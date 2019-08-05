@@ -1,5 +1,5 @@
 <template>
-    <div class="navs-panel">
+    <div class="sub-panel navs-panel panel-pebble-theme">
         <div class="nav-block" v-for="nav in navs" :key="nav.id" @click="$emit('nav-clicked', nav)">{{nav.text}}</div>
     </div>
 </template>
@@ -15,3 +15,20 @@ export default Vue.extend({
     }
 })
 </script>
+
+<style scoped>
+.navs-panel {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+}
+.nav-block {
+    border-radius: 4px;
+    margin-right: 1rem;
+    background-color: #eaeaea;
+    padding: 5px 10px;
+    min-width: 10rem;
+    min-height: 5rem;
+}
+</style>

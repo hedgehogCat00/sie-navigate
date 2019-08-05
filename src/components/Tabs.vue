@@ -1,6 +1,6 @@
 <template>
-    <div class="tabs-panel">
-        <div v-for="tab in tabs" :key="tab.id" @click="$emit('tab-clicked', tab)">
+    <div class="sub-panel tabs-panel panel-pebble-theme">
+        <div class="tab" v-for="tab in tabs" :key="tab.id" @click="$emit('tab-clicked', tab)">
             <span>{{tab.text}}</span>
             <span>{{tab.selected}}</span>
         </div>
@@ -18,3 +18,19 @@ export default Vue.extend({
     }
 })
 </script>
+
+<style scoped>
+.tabs-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+}
+
+.tab {
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #eaeaea;
+    margin-bottom: .5rem;
+    min-height: 3rem;
+}
+</style>
