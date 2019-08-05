@@ -15,21 +15,21 @@ import Navs from './components/Navs.vue'
 const mapObj = {
     tabs: [],
     navs: []
-};
-const map = new Map();
+}
+const map = new Map()
 export default {
     name: 'app',
     components: {
         Tabs,
         Navs
     },
-    data() {
+    data () {
         return {
             tabs: mapObj.tabs,
             navs: mapObj.navs
         }
     },
-    created() {
+    created () {
         const data = [
             ['category1', [{
                 text: 'item1',
@@ -51,41 +51,41 @@ export default {
                 text: 'item2-3',
                 link: 'link'
             }]]
-        ];
+        ]
         data.forEach((item) => {
-            map.set(item[0], item[1]);
-        });
+            map.set(item[0], item[1])
+        })
         mapObj.tabs = map.keys().map((text, i) => {
             return {
                 id: i,
                 text: text,
                 selected: i === 0
-            };
-        });
+            }
+        })
         mapObj.navs = map.values()[0].map((nav, i) => {
             return {
                 text: nav.text,
                 link: nav.link,
                 id: i
-            };
-        });
+            }
+        })
     },
     methods: {
-        onTabClicked(tab) {
-            console.log(`tab clicked:`, tab);
+        onTabClicked (tab) {
+            console.log(`tab clicked:`, tab)
             mapObj.tabs.forEach((tmpTab) => {
-                tab.selected = (tab.text === tmpTab.text);
-            });
+                tab.selected = (tab.text === tmpTab.text)
+            })
             mapObj.navs = map.get(tab.text).map((nav, i) => {
                 return {
                     text: nav.text,
                     link: nav.link,
                     id: i
-                };
-            });
+                }
+            })
         },
-        onNavClicked(nav) {
-            console.log('nav clicked: ', nav);
+        onNavClicked (nav) {
+            console.log('nav clicked: ', nav)
         }
     }
 }
