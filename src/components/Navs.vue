@@ -1,6 +1,6 @@
 <template>
     <div class="sub-panel navs-panel panel-pebble-theme">
-        <div class="nav-block" v-for="nav in navs" :key="nav.id" @click="$emit('nav-clicked', nav)">{{nav.text}}</div>
+        <div class="nav-block" v-for="nav in navs" :key="nav._id" @click="$emit('nav-clicked', nav)">{{nav.cnName}}</div>
     </div>
 </template>
 

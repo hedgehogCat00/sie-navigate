@@ -1,7 +1,7 @@
 <template>
     <div class="sub-panel tabs-panel panel-pebble-theme">
-        <div class="tab" v-for="tab in tabs" :key="tab.id" @click="$emit('tab-clicked', tab)">
-            <span>{{tab.text}}</span>
+        <div class="tab" v-for="tab in tabs" :key="tab._id" @click="$emit('tab-clicked', tab)">
+            <span>{{tab.category}}</span>
             <span>{{tab.selected}}</span>
         </div>
     </div>
@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
 export default Vue.extend({
     props: {
         tabs: {
