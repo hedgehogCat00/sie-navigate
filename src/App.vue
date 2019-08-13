@@ -52,47 +52,49 @@ export default {
     },
     created () {
         console.log(this)
-        this.$http.get(`${apiPrefix}/urls`).then(onGetUrlsList, onRequestError)
+        const instance = this.$http.create({ headers: { 'content-type': 'text/plain' } })
+        instance.get('urls').then((res) => {
+            onGetUrlsList(res)
+        }).catch((err) => {
+            onRequestError(err)
+        })
     },
     methods: {
-        onTabClicked (tab) {
-            console.log(`tab clicked:`, tab)
-            mapObj.tabs.forEach(tmpTab => {
-                tmpTab.selected = (tab.category === tmpTab.category)
+        onTabClicked (clickedTab) {
+            console.log(`tab clicked:`, clickedTab)
+            mapObj.tabs.forEach(tab => {
+                tab.selected = (clickedTab.category === tab.category)
             })
-            // mapObj.navs = map.get(tab.text).map((nav, i) => {
-            //     return {
-            //         text: nav.text,
-            //         link: nav.link,
-            //         id: i
-            //     }
-            // })
 
-            tab.items.forEach((item, i) => {
+            clickedTab.items.forEach((item, i) => {
                 item._id = i
             })
-            mapObj.navs = tab.items
+
+            // change the pointer
+            mapObj.tabs = Array.from(mapObj.tabs)
+            mapObj.navs = clickedTab.items
         },
         onNavClicked (nav) {
             console.log('nav clicked: ', nav)
-            postClickBank.call(this, nav)
+            recordClickBank.call(this, nav)
             // open new client tab
             window.open(nav.url)
         }
     }
 }
 
-function postClickBank (nav) {
+function recordClickBank (nav) {
     const currCategory = mapObj.tabs.find((tab) => tab.selected).category
-    this.$http.post(`${apiPrefix}/clickBank`, { id: nav.id, category: currCategory }, { emulateJSON: true })
+    this.$http.put('clickBank', { itemid: nav.itemid, category: currCategory }, { emulateJSON: true })
 }
 
 function onGetUrlsList (response) {
     console.log(response)
     if (response.status === 200) {
-        const data = response.data
+        const data = response.data.data
         mapObj.tabs = data.map((category, i) => {
             category['_id'] = i
+            category.selected = (i === 0)
             return category
         })
         mapObj.navs = mapObj.tabs[0].items.map((nav, i) => {
@@ -127,7 +129,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #4bb2c2;
+  background: linear-gradient(to right,#00737d,#239196);
   /* margin-top: 60px; */
 }
 
@@ -138,7 +140,7 @@ body {
 }
 
 .panels-container .sub-panel {
-    box-shadow: 0 1px 5px 0 #3f95a2;
+    box-shadow: 0 1px 2px 0 #003c46;
 }
 
 .panels-container .sub-panel:not(:last-child) {

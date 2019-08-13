@@ -1,8 +1,8 @@
 <template>
     <div class="sub-panel tabs-panel panel-pebble-theme">
-        <div class="tab" v-for="tab in tabs" :key="tab._id" @click="$emit('tab-clicked', tab)">
-            <span>{{tab.category}}</span>
-            <span>{{tab.selected}}</span>
+        <div class="tab" v-for="tab in tabs" v-bind:class="{selected: tab.selected}" :key="tab._id" @click="$emit('tab-clicked', tab)">
+            <span class="title">{{tab.category}}</span>
+            <!-- <span>{{tab.selected ? 'true' : 'false'}}</span> -->
         </div>
     </div>
 </template>
@@ -30,8 +30,14 @@ export default Vue.extend({
 .tab {
     border-radius: 4px;
     padding: 5px 10px;
-    background-color: #eaeaea;
+    background-color: #999d9d38;
+    color: white;
     margin-bottom: .5rem;
     min-height: 3rem;
+    transition: background-color .2s ease-out;
+}
+
+.tab.selected {
+    background-color: #b2cac447;
 }
 </style>

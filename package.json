@@ -24,6 +24,11 @@
     "tslint-config-standard": "^8.0.1",
     "vue-template-compiler": "^2.6.10",
     "axios": "latest",
-    "vue-axios": "latest"
+    "vue-axios": "latest",
+    "@fontawesome/fontawesome": "0.1.6",
+    "@fontawesome/vue-fontawesome": "0.1.6",
+    "@fontawesome/fontawesome-free-solid": "0.1.6",
+    "@fontawesome/fontawesome-free-regular": "0.1.6",
+    "@fontawesome/fontawesome-free-brands": "0.1.6"
   }
 }
