@@ -24,20 +24,23 @@ export default Vue.extend({
 .tabs-panel {
     display: flex;
     flex-direction: column;
-    padding: 10px 5px;
+    /* padding: 10px 5px; */
 }
 
 .tab {
     border-radius: 4px;
     padding: 5px 10px;
-    background-color: #999d9d38;
-    color: white;
+    /* background-color: #999d9d38; */
+    background-color: rgba(0,0,0,.1);
+    color: #eaeaea;
     margin-bottom: .5rem;
     min-height: 3rem;
-    transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out, transform .2s ease-out;
 }
 
 .tab.selected {
-    background-color: #b2cac447;
+    /* background-color: #b2cac447; */
+    background-color: rgba(0,0,0,.3);
+    transform: scale(1.1);
 }
 </style>

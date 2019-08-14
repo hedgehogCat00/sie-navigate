@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <!-- <input type="text" /> -->
+    <div class="header">
+        <div class="title">Nav</div>
+        <div class="operations-box"></div>
+    </div>
     <div class="panels-container">
       <Tabs v-bind:tabs="mapObj.tabs" v-on:tab-clicked="onTabClicked"></Tabs>
       <Navs v-bind:navs="mapObj.navs" v-on:nav-clicked="onNavClicked"></Navs>
@@ -33,7 +37,6 @@ import Navs from './components/Navs.vue'
 //     selected?: boolean;
 // }
 
-const apiPrefix = 'localhost:3000'
 const mapObj = {
     tabs: [],
     navs: []
@@ -121,7 +124,7 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -133,23 +136,39 @@ body {
   /* margin-top: 60px; */
 }
 
+.header {
+    display: flex;
+    height: 4rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+.header .title {
+    font-size: 4rem;
+    margin-left: 1rem;
+    line-height: 4rem;
+    font-weight: bold;
+    color: #eaeaea;
+}
+
 .panels-container {
   flex-grow: 1;
+  padding: 1rem;
   display: flex;
   align-items: stretch;
 }
 
-.panels-container .sub-panel {
+/* .panels-container .sub-panel {
     box-shadow: 0 1px 2px 0 #003c46;
-}
+} */
 
 .panels-container .sub-panel:not(:last-child) {
   margin-right: 1rem;
   width: 10rem;
 }
 
-.panel-pebble-theme {
+/* .panel-pebble-theme {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-}
+} */
 </style>

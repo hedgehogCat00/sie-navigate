@@ -670,6 +670,56 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@fortawesome/fontawesome-common-types@^0.1.2-1":
+  version "0.1.7"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.1.7.tgz#4336c4b06d0b5608ff1215464b66fcf9f4795284"
+  integrity sha1-QzbEsG0LVgj/EhVGS2b8+fR5UoQ=
+
+"@fortawesome/fontawesome-common-types@^0.2.0-1", "@fortawesome/fontawesome-common-types@^0.2.21":
+  version "0.2.21"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.21.tgz#f1c26ae24761cca583de7cafd1273ab4c70a4d87"
+  integrity sha1-8cJq4kdhzKWD3nyv0Sc6tMcKTYc=
+
+"@fortawesome/fontawesome-free-brands@5.1.0-3":
+  version "5.1.0-3"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-free-brands/-/fontawesome-free-brands-5.1.0-3.tgz#27efbae1bd80fb9deb10022e2834e16f08a73480"
+  integrity sha1-J++64b2A+53rEAIuKDThbwinNIA=
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.2-1"
+
+"@fortawesome/fontawesome-free-regular@5.1.0-3":
+  version "5.1.0-3"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-free-regular/-/fontawesome-free-regular-5.1.0-3.tgz#a208b5ab976b0edb01727dc2082958e8b4385313"
+  integrity sha1-ogi1q5drDtsBcn3CCClY6LQ4UxM=
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.2-1"
+
+"@fortawesome/fontawesome-free-solid@5.1.0-3":
+  version "5.1.0-3"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-free-solid/-/fontawesome-free-solid-5.1.0-3.tgz#60e6e1cc7588b933a570bcfc9eb78b9cadda451a"
+  integrity sha1-YObhzHWIuTOlcLz8nreLnK3aRRo=
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.1.2-1"
+
+"@fortawesome/fontawesome-svg-core@0.5.0":
+  version "1.2.21"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.21.tgz#5b08a28d6e1ea198e002447b158abba00fd12122"
+  integrity sha1-WwiijW4eoZjgAkR7FYq7oA/RISI=
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.21"
+
+"@fortawesome/fontawesome@1.2.0-6":
+  version "1.2.0-6"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/fontawesome/-/fontawesome-1.2.0-6.tgz#567c7c76850d042bcd4ffa2e061b2919e7e9b791"
+  integrity sha1-Vnx8doUNBCvNT/ouBhspGefpt5E=
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.0-1"
+
+"@fortawesome/vue-fontawesome@0.1.6":
+  version "0.1.6"
+  resolved "http://10.192.30.110:8081/repository/npm/@fortawesome/vue-fontawesome/-/vue-fontawesome-0.1.6.tgz#18a0f4263b90f65180fc927325ba01896276ea04"
+  integrity sha1-GKD0JjuQ9lGA/JJzJboBiWJ26gQ=
+
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "http://10.192.29.28:8081/repository/npm/@hapi/address/-/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"
