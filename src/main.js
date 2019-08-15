@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import * as solid from '@fortawesome/fontawesome-free-solid'
 // import * as regular from '@fortawesome/fontawesome-free-regular'
 // import * as brands from '@fortawesome/fontawesome-free-brands'
+import * as tools from './utils/tools'
 
 Vue.config.productionTip = false
 
 initAxios()
-
 initFontawesome()
+Vue.use(tools)
 
 new Vue({
     render: h => h(App)
