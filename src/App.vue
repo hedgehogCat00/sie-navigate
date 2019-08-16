@@ -4,7 +4,7 @@
     <div class="header">
       <div class="title">Nav</div>
       <div class="operations-box">
-          <div class="operation lang-switcher" @click="switchLang()">{{langSwitcherText}}</div>
+          <div class="operation pebble-theme lang-switcher" @click="switchLang()">{{langSwitcherText}}</div>
       </div>
     </div>
     <div class="panels-container">
@@ -109,15 +109,20 @@ function recordClickBank (nav) {
     const currCategory = mapObj.tabs.find(tab => tab.selected).category
     this.$http.put(
         'clickBank',
-        { itemid: nav.itemid, category: currCategory },
-        { emulateJSON: true }
+        { itemId: nav.itemId, category: currCategory },
+        { responseType: 'text' }
     )
+    // this.$http.request({
+    //     method: 'put',
+    //     url: 'clickBank',
+    //     data: { itemId: nav.itemId, category: currCategory }
+    // })
 }
 
 function onGetUrlsList (response) {
     console.log(response)
     if (response.status === 200) {
-        const data = response.data.data
+        const data = response.data
         mapObj.tabs = data.map((category, i) => {
             category['_id'] = i
             category.selected = i === 0
@@ -165,7 +170,6 @@ body {
   );
   /* margin-top: 60px; */
 }
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -173,7 +177,6 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
 }
-
 .header .title {
   font-size: 2rem;
   margin-left: 3rem;
@@ -181,40 +184,42 @@ body {
   font-weight: bold;
   color: #eaeaea;
 }
-
 .panels-container {
   flex-grow: 1;
   padding: 1rem;
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
 }
-
 /* .panels-container .sub-panel {
     box-shadow: 0 1px 2px 0 #003c46;
 } */
-
 .panels-container .sub-panel:not(:last-child) {
   margin-right: 1rem;
   width: 10rem;
 }
-
 /* .panel-pebble-theme {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 } */
-
 .operations-box {
     display: flex;
     align-items: center;
     margin-right: 1rem;
 }
-
 .operations-box .operation {
     border-radius: 4px;
     min-width: 5rem;
     padding: 10px 0;
-    background-color: rgba(0, 0, 0, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.1); */
     color: rgba(0, 0, 0, .1);
     font-weight: bold;
+    cursor: pointer;
+}
+.pebble-theme {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color .2s ease-out;
+}
+.pebble-theme:hover {
+    background-color: rgba(0, 0, 0, 0.15);
 }
 </style>
