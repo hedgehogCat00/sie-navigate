@@ -2,7 +2,7 @@ module.exports = {
     publicPath: './',
     outputDir: 'dist',
     lintOnSave: process.env.NODE_ENV !== 'production',
-    productionSourceMap: true,
+    productionSourceMap: false,
     devServer: {
         proxy: {
             '/api': {

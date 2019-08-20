@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <input type="text" /> -->
     <div class="header">
-      <div class="title">Nav</div>
+      <div class="title">Navigation</div>
       <div class="operations-box">
           <div class="operation pebble-theme lang-switcher" @click="switchLang()">{{langSwitcherText}}</div>
       </div>
