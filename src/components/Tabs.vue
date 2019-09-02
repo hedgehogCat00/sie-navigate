@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-panel tabs-panel panel-pebble-theme">
+  <div class="sub-panel tabs-panel">
     <div
       class="tab pebble-theme"
       v-for="tab in tabs"
@@ -9,7 +9,6 @@
     >
       <font-awesome-icon class="icon" :icon="tagIcon"></font-awesome-icon>
       <span class="title">{{tab.category}}</span>
-      <!-- <span>{{tab.selected ? 'true' : 'false'}}</span> -->
     </div>
   </div>
 </template>
@@ -51,28 +50,23 @@ export default Vue.extend({
 .tabs-panel {
   display: flex;
   flex-direction: column;
-  /* padding: 10px 5px; */
 }
 .tab {
   display: flex;
   align-items: center;
-  border-radius: 4px;
-  padding: 5px 10px;
-  /* background-color: #999d9d38; */
-  /* background-color: rgba(0, 0, 0, 0.1); */
+  padding: 0 10px 0 25px;
   color: #eaeaea;
-  margin-bottom: 1rem;
   min-height: 4rem;
-  transition: background-color 0.2s ease-out, transform 0.25s cubic-bezier(0.5, 2, 0.65, 1);
+  transition: background-color 0.2s ease-out,
+    transform 0.25s cubic-bezier(0.5, 2, 0.65, 1);
   cursor: pointer;
+  background-color: rgb(143, 178, 191);
 }
-/* .tab:hover {
-  background-color: rgba(0, 0, 0, 0.15);
-} */
 .tab.selected {
-  /* background-color: #b2cac447; */
-  background-color: rgba(0, 0, 0, 0.3);
-  transform: scale(1.03);
+  background-color: rgb(175, 201, 212);
+}
+.tab:not(.selected):hover {
+  background-color: rgb(135, 170, 183);
 }
 .tab .title {
   font-weight: bold;
@@ -83,12 +77,12 @@ export default Vue.extend({
 .tab .icon {
   margin-right: 10px;
   margin-left: 5px;
-  transition: opacity 0.2s ease-out;
-  opacity: 0.2;
-  color: black;
+  transition: opacity 0.2s ease-out, transform .2s ease-out;
+  color: rgba(0, 0, 0, .2);
   font-size: 1.5rem;
 }
 .tab.selected .icon {
-  opacity: 0.4;
+  transform: scale(1.2);
+  color: rgb(37, 186, 186);
 }
 </style>

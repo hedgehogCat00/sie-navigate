@@ -1,20 +1,32 @@
 <template>
-  <div class="sub-panel navs-panel panel-pebble-theme">
-    <a class="nav-block pebble-theme" v-for="nav in navs" :key="nav._id" v-bind:href="nav.url" @click="onBlockClick($event, nav)">
-      <div class="title">
-        <font-awesome-icon class="icon" :icon="linkIcon"></font-awesome-icon>
-        <span class="icon-label">{{getLang(lang, nav, 'Name')}}</span>
-      </div>
-      <div class="body">
-        <span>{{getLang(lang, nav, 'Description')}}</span>
-      </div>
-      <div class="footer">
-        <div class="popu-block">
-          <font-awesome-icon class="icon" :icon="popularityIcon"></font-awesome-icon>
-          <span class="icon-label">{{nav.popularity}}</span>
+  <div class="sub-panel navs-panel">
+    <!-- <transition name="bump"> -->
+      <a
+        class="nav-block"
+        v-for="nav in navs"
+        :key="nav._id"
+        v-bind:href="nav.url"
+        @click="onBlockClick($event, nav)"
+      >
+        <div class="title">
+          <img
+            class="icon"
+            v-bind:src="getImgUrl(nav.itemId)"
+            @error="provideDefaultImgUrl($event)"
+          />
+          <span class="icon-label">{{getLang(lang, nav, 'Name')}}</span>
         </div>
-      </div>
-    </a>
+        <div class="body">
+          <span>{{getLang(lang, nav, 'Description')}}</span>
+        </div>
+        <div class="footer">
+          <div class="popu-block">
+            <font-awesome-icon class="icon" :icon="popularityIcon"></font-awesome-icon>
+            <span class="icon-label">{{nav.popularity}}</span>
+          </div>
+        </div>
+      </a>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -50,6 +62,12 @@ export default Vue.extend({
         },
         getLang (lang, data, prop) {
             return this.$getText(lang, data, prop)
+        },
+        getImgUrl (id) {
+            return this.$imgUrlDeco(`img/${id.toLowerCase()}-icon.png`)
+        },
+        provideDefaultImgUrl (evt) {
+            evt.target.src = this.$imgUrlDeco('img/siemens-icon.png')
         }
     }
 })
@@ -61,8 +79,7 @@ export default Vue.extend({
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  /* padding: 1rem; */
-  padding: 0 1rem;
+  padding: 2rem;
 }
 .nav-block {
   display: flex;
@@ -72,29 +89,36 @@ export default Vue.extend({
   margin-bottom: 1rem;
   padding: 15px 20px;
   min-width: 15rem;
-  min-height: 7rem;
+  min-height: 5rem;
   border-radius: 4px;
-  /* background-color: #205459; */
-  background-color: rgba(0, 0, 0, 0.1);
-  color: #eaeaea;
+  background-color: white;
+  color: #6a6a6a;
   cursor: pointer;
   text-decoration: none;
-  /* transition: background-color 0.2s ease-out; */
+  box-shadow: 0 0 40px -10px rgb(210, 210, 210);
+  transition: background-color 0.15s ease-out, box-shadow 0.2s ease-out;
 }
-/* .nav-block:hover {
-  background-color: rgba(0, 0, 0, 0.15);
-} */
+.nav-block:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0 0 20px -5px rgb(180, 180, 180);
+}
 .nav-block .title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
   font-weight: bold;
   text-align: left;
+  font-size: 1.5rem;
 }
 .nav-block .title .icon {
-  font-size: 2.5rem;
+  height: 2.5rem;
+  border-radius: 10px;
 }
 .nav-block .body {
   display: flex;
   justify-content: flex-start;
   font-size: 12px;
+  color: #adadad;
 }
 .nav-block .footer {
   display: flex;
@@ -107,5 +131,30 @@ export default Vue.extend({
 
 .nav-block .icon {
   margin-right: 5px;
+}
+
+.bump-enter-active {
+  transition: transform 0.3s cubic-bezier(0.5, 1.5, 0.5, 1),
+    opacity 0.2s ease-out;
+}
+.bump-enter {
+  transform: scale(0.9);
+  opacity: 0;
+}
+.bump-enter-to {
+  transform: scale(1);
+  opacity: 1;
+}
+.bump-leave-active {
+  transition: transform 0.3s cubic-bezier(0.5, 1.5, 0.5, 1),
+    opacity 0.2s ease-out;
+}
+.bump-leave {
+  transform: scale(1);
+  opacity: 1;
+}
+.bump-leave-to {
+  transform: scale(0.9);
+  opacity: 0;
 }
 </style>

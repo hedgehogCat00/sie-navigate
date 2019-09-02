@@ -7,4 +7,7 @@ exports.install = function (Vue, options) {
             return data[`en${prop}`]
         }
     }
+    Vue.prototype.$imgUrlDeco = function (relatedUrl) {
+        return `${process.env.VUE_APP_BASE_API}${relatedUrl}`
+    }
 }
