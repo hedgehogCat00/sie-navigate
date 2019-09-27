@@ -1,6 +1,5 @@
 <template>
   <div class="sub-panel navs-panel">
-    <!-- <transition name="bump"> -->
       <a
         class="nav-block"
         v-for="nav in navs"
@@ -13,6 +12,7 @@
             class="icon"
             v-bind:src="getImgUrl(nav.itemId)"
             @error="provideDefaultImgUrl($event)"
+            alt="icon"
           />
           <span class="icon-label">{{getLang(lang, nav, 'Name')}}</span>
         </div>
@@ -26,7 +26,6 @@
           </div>
         </div>
       </a>
-    <!-- </transition> -->
   </div>
 </template>
 
@@ -85,11 +84,11 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 15rem;
+  height: 5rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
   padding: 15px 20px;
-  min-width: 15rem;
-  min-height: 5rem;
   border-radius: 4px;
   background-color: white;
   color: #6a6a6a;

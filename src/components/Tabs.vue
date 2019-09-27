@@ -7,7 +7,7 @@
       :key="tab._id"
       @click="onTabClick($event, tab)"
     >
-      <font-awesome-icon class="icon" :icon="tagIcon"></font-awesome-icon>
+      <!-- <font-awesome-icon class="icon" :icon="tagIcon"></font-awesome-icon> -->
       <span class="title">{{tab.category}}</span>
     </div>
   </div>
@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTag } from '@fortawesome/fontawesome-free-solid'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { faTag } from '@fortawesome/fontawesome-free-solid'
 
 export default Vue.extend({
     props: {
@@ -29,10 +29,10 @@ export default Vue.extend({
             required: true
         }
     },
-    components: { FontAwesomeIcon },
+    // components: { FontAwesomeIcon },
     data () {
         return {
-            tagIcon: faTag
+            // tagIcon: faTag
         }
     },
     methods: {
@@ -55,15 +55,16 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   padding: 0 10px 0 25px;
-  color: #eaeaea;
+  color: black;
   min-height: 4rem;
   transition: background-color 0.2s ease-out,
     transform 0.25s cubic-bezier(0.5, 2, 0.65, 1);
   cursor: pointer;
-  background-color: rgb(143, 178, 191);
+  /* background-color: rgb(143, 178, 191); */
 }
 .tab.selected {
-  background-color: rgb(175, 201, 212);
+  color: white;
+  background-color: rgb(50, 126, 147);
 }
 .tab:not(.selected):hover {
   background-color: rgb(135, 170, 183);

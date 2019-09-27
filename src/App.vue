@@ -2,14 +2,10 @@
   <div id="app">
     <div class="header">
       <div class="left-panel">
-        <div class="title">Navigation</div>
-        <SearchBar
-          v-on:search-focused="raiseSearchMask()"
-          v-on:search-blured="unraiseSearchMask()"
-          v-on:searching="search($event)"
-        ></SearchBar>
+        <div class="title">Bookmark collection</div>
       </div>
       <div class="operations-box right-panel">
+        <SearchBar v-on:search-focused="raiseSearchMask()" v-on:searching="search($event)"></SearchBar>
         <div class="operation lang-switcher" @click="switchLang()">{{langSwitcherText}}</div>
       </div>
     </div>
@@ -17,9 +13,9 @@
       <Tabs v-bind:tabs="mapObj.tabs" v-bind:lang="lang" v-on:tab-clicked="onTabClicked"></Tabs>
       <Navs v-bind:navs="mapObj.navs" v-bind:lang="lang" v-on:nav-clicked="onNavClicked"></Navs>
       <transition name="fade">
-      <div v-if="onSearch" class="search-area">
-        <Navs v-bind:navs="mapObj.navs" v-bind:lang="lang" v-on:nav-clicked="onNavClicked"></Navs>
-      </div>
+        <div v-if="onSearch" class="search-area" @click="unraiseSearchMask()">
+          <Navs v-bind:navs="searchNavs" v-bind:lang="lang" v-on:nav-clicked="onNavClicked"></Navs>
+        </div>
       </transition>
     </div>
   </div>
@@ -31,119 +27,134 @@ import Navs from './components/Navs.vue'
 import SearchBar from './components/SearchBar.vue'
 
 const mapObj = {
-    tabs: [],
-    navs: []
+  tabs: [],
+  navs: []
 }
 // (itemId => nav item)
 const navsMap = new Map()
 export default {
-    name: 'app',
-    components: {
-        Tabs,
-        Navs,
-        SearchBar
-    },
-    data () {
-        return {
-            mapObj: mapObj,
-            lang: 'cn',
-            langSwitcherText: 'CN',
-            navsMap: navsMap,
-            onSearch: false
-        }
-    },
-    created () {
-        console.log(this)
-        const instance = this.$http.create({
-            headers: { 'content-type': 'application/json' }
-        })
-        instance
-            .get('api/urls')
-            .then(res => {
-                onGetUrlsList(res)
-            })
-            .catch(err => {
-                onRequestError(err)
-            })
-    },
-    methods: {
-        onTabClicked (clickedTab) {
-            console.log(`tab clicked:`, clickedTab)
-            mapObj.tabs.forEach(tab => {
-                tab.selected = clickedTab.category === tab.category
-            })
-
-            clickedTab.items.forEach((item, i) => {
-                item._id = i
-            })
-
-            // change the pointer
-            // shallow copy
-            mapObj.tabs = Array.from(mapObj.tabs)
-            mapObj.navs = clickedTab.items
-        },
-        onNavClicked (nav) {
-            console.log('nav clicked: ', nav)
-            recordClickBank.call(this, nav)
-            // open new client tab
-            window.open(nav.url)
-        },
-        switchLang () {
-            const isCN = this.$data.lang === 'cn'
-            if (isCN) {
-                this.$data.lang = 'en'
-                this.$data.langSwitcherText = 'EN'
-            } else {
-                this.$data.lang = 'cn'
-                this.$data.langSwitcherText = 'CN'
-            }
-        },
-        raiseSearchMask () {
-            console.log('raise mask')
-            this.$data.onSearch = true
-        },
-        unraiseSearchMask () {
-            console.log('unraise mask')
-            this.$data.onSearch = false
-        },
-        search (str) {
-            console.log('search: ', str)
-        }
+  name: 'app',
+  components: {
+    Tabs,
+    Navs,
+    SearchBar
+  },
+  data() {
+    return {
+      mapObj: mapObj,
+      lang: 'cn',
+      langSwitcherText: 'CN',
+      navsMap: navsMap,
+      onSearch: false,
+      searchNavs: [],
+      timerId: null,
+      searchStr: ''
     }
-}
+  },
+  created() {
+    console.log(this)
+    const instance = this.$http.create({
+      headers: { 'content-type': 'application/json' }
+    })
+    instance
+      .get('api/urls')
+      .then(res => {
+        onGetUrlsList(res)
+      })
+      .catch(err => {
+        onRequestError(err)
+      })
+  },
+  methods: {
+    onTabClicked(clickedTab) {
+      // console.log(`tab clicked:`, clickedTab)
+      mapObj.tabs.forEach(tab => {
+        tab.selected = clickedTab.category === tab.category
+      })
 
-function recordClickBank (nav) {
-    const currCategory = mapObj.tabs.find(tab => tab.selected).category
-    this.$http.put(
-        'api/clickBank',
-        { itemId: nav.itemId, category: currCategory },
-        { responseType: 'text' }
-    )
-}
+      clickedTab.items.forEach((item, i) => {
+        item._id = i
+      })
 
-function onGetUrlsList (response) {
-    console.log(response)
-    if (response.status === 200) {
-        const data = response.data
-        data.forEach((category, i) => {
-            category['_id'] = i
-            category.selected = i === 0
-            mapObj.tabs.push(category)
-            category.items.forEach(item => {
-                navsMap.set(item.itemId, item)
-            })
-        })
-        mapObj.navs = mapObj.tabs[0].items.map((nav, i) => {
-            nav['_id'] = i
-            return nav
-        })
-    } else {
-        onRequestError(`status: ${response.status}`)
+      // change the pointer
+      // shallow copy
+      mapObj.tabs = Array.from(mapObj.tabs)
+      mapObj.navs = clickedTab.items
+    },
+    onNavClicked(nav) {
+      console.log('nav clicked: ', nav)
+      recordClickBank.call(this, nav)
+      // open new client tab
+      window.open(nav.url)
+    },
+    switchLang() {
+      const isCN = this.$data.lang === 'cn'
+      if (isCN) {
+        this.$data.lang = 'en'
+        this.$data.langSwitcherText = 'EN'
+      } else {
+        this.$data.lang = 'cn'
+        this.$data.langSwitcherText = 'CN'
+      }
+    },
+    raiseSearchMask() {
+      console.log('raise mask')
+      this.$data.onSearch = true
+      this.$data.timerId = window.setInterval(() => {
+        if(this.$data.searchStr) {
+          console.log('send a search request: ', this.$data.searchStr);
+          
+          Promise.resolve(this.$data.mapObj.navs.filter((nav, i) => i < this.$data.searchStr.length))
+          .then(arr => {
+            this.$data.searchNavs = arr
+            this.$data.searchStr = null
+          })
+        }
+      }, 500)
+    },
+    unraiseSearchMask() {
+      console.log('unraise mask')
+      this.$data.onSearch = false
+      window.clearInterval(this.$data.timerId);
+    },
+    search(str) {
+      this.$data.searchStr = str
     }
+  }
 }
 
-function onRequestError (err) {
-    console.error(err)
+function recordClickBank(nav) {
+  const currCategory = mapObj.tabs.find(tab => tab.selected).category
+  this.$http.put(
+    'api/clickBank',
+    { itemId: nav.itemId, category: currCategory },
+    { responseType: 'text' }
+  )
+}
+
+function onGetUrlsList(response) {
+  console.log(response)
+  if (response.status === 200) {
+    const data = response.data
+    data.forEach((category, i) => {
+      category['_id'] = i
+      category.selected = i === 0
+      mapObj.tabs.push(category)
+      category.items.forEach(item => {
+        navsMap.set(item.itemId, item)
+      })
+    })
+    mapObj.navs = mapObj.tabs[0].items.map((nav, i) => {
+      nav['_id'] = i
+      return nav
+    })
+  } else {
+    onRequestError(`status: ${response.status}`)
+  }
+}
+
+function onRequestError(err) {
+  console.error(err)
 }
 </script>
 
@@ -169,7 +180,7 @@ body {
   display: flex;
   justify-content: space-between;
   height: 3rem;
-  background-color: rgb(57, 108, 117);
+  background-color: rgb(7, 25, 28);
 }
 .header .left-panel {
   display: flex;
@@ -189,10 +200,10 @@ body {
   align-items: flex-start;
 }
 .panels-container > .sub-panel:first-child {
-  margin-right: 1rem;
-  width: 10rem;
-  padding-top: 40px;
-  background-color: rgb(43, 86, 102);
+  /* margin-right: 1rem; */
+  width: 15rem;
+  /* padding-top: 40px; */
+  background-color: rgb(216, 234, 238);
   align-self: stretch;
 }
 .operations-box {
@@ -204,7 +215,7 @@ body {
   border-radius: 4px;
   min-width: 5rem;
   padding: 10px 0;
-  color: rgba(0, 0, 0, 0.1);
+  color: white;
   font-weight: bold;
   cursor: pointer;
 }
@@ -220,7 +231,7 @@ body {
   background-color: rgba(0, 0, 0, 0.7);
 }
 .fade-enter-active {
-  transition: opacity .2s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 .fade-enter {
   opacity: 0;
@@ -229,13 +240,20 @@ body {
   opacity: 1;
 }
 .fade-leave-active {
-  transition: opacity .2s ease-out;
+  transition: opacity 0.2s ease-out;
 }
 .fade-leave {
   opacity: 1;
 }
 .fade-leave-to {
   opacity: 0;
+}
+
+.search-area .nav-block {
+  box-shadow: 0 0 40px -10px rgb(60, 60, 60);
+}
+.search-area .nav-block:hover {
+  box-shadow: 0 0 40px -10px rgb(10, 10, 10);
 }
 /* .pebble-theme {
   background-color: rgba(0, 0, 0, 0.1);
